@@ -5,9 +5,7 @@ import List from "./components/List.tsx";
 
 function App() {
   const categoriesOptionArray = ["Groceries", "Utilities", "Enterteinment"];
-  const [expensesArray, setExpensesArray] = useState([
-    { id: -1, description: "No items added yet", amount: 0, category: "none" },
-  ]);
+  const [expensesArray, setExpensesArray] = useState([{ id: -1, description: "Pick a Category", amount: 0, category: "none" }]);
   const [selectedFilter, setSelectedFilter] = useState("none");
 
   const handleFormData = (desc: string, am: number, cat: string) => {
@@ -25,15 +23,15 @@ function App() {
     return expensesArray.length == 0 ? 0 : expensesArray.length - 1;
   };
 
-  const test = (selectedValue: string) => {
-    setSelectedFilter(selectedValue);
+  const deleteExpenseFromArray = (idToBeDeleted: number) => {
+    setExpensesArray(expensesArray.filter((item) => item.id != idToBeDeleted));
   };
 
   return (
     <>
       <Form categoriesArray={categoriesOptionArray} handleSubmit={handleFormData} />
-      <Filter optionsArray={categoriesOptionArray} filterStateSetter={test} />
-      <List arrayToList={expensesArray} categoryAsFilter={selectedFilter} />
+      <Filter optionsArray={categoriesOptionArray} filterStateSetter={setSelectedFilter} />
+      <List arrayToList={expensesArray} categoryAsFilter={selectedFilter} handleDeleteButton={deleteExpenseFromArray} />
     </>
   );
 }

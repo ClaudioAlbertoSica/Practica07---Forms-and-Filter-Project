@@ -1,5 +1,4 @@
 import { FormEvent, useRef } from "react";
-import "./Form.css";
 
 interface Properties {
   categoriesArray: string[];
