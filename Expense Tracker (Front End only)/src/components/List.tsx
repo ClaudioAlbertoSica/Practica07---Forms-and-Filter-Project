@@ -20,7 +20,7 @@ function List({ arrayToList, categoryAsFilter = "All categories", handleDeleteBu
   };
 
   return (
-    <table className="table table-borderless">
+    <table className="table table-bordered">
       <thead>
         <tr>
           <th>Description</th>
@@ -34,7 +34,7 @@ function List({ arrayToList, categoryAsFilter = "All categories", handleDeleteBu
             <td>{item.description}</td> <td>$ {item.amount}</td>
             <td>{item.category}</td>
             <td>
-              <button type="button" className="btn btn-danger" onClick={() => handleDeleteButton(item.id)}>
+              <button type="button" className="btn btn-outline-danger" onClick={() => handleDeleteButton(item.id)}>
                 Delete
               </button>
             </td>
