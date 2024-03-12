@@ -27,7 +27,9 @@ function App() {
   };
 
   const chooseNewId = () => {
-    return expensesArray?.length == 0 ? 0 : expensesArray.length - 1;
+    const newID = expensesArray.length == 0 ? 0 : expensesArray[expensesArray.length - 1].id + 1;
+    console.log(newID);
+    return newID;
   };
 
   const deleteExpenseFromArray = (idToBeDeleted: number) => {
