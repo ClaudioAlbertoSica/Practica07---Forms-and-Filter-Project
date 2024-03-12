@@ -9,7 +9,7 @@ function Filter({ optionsArray, filterStateSetter }: Properties) {
   const selectedRef = useRef<HTMLSelectElement>(null);
 
   const handleSelect = () => {
-    filterStateSetter(selectedRef.current?.value || "");
+    filterStateSetter(selectedRef.current?.value || "All Categories");
   };
 
   return (
@@ -18,7 +18,7 @@ function Filter({ optionsArray, filterStateSetter }: Properties) {
         <label htmlFor="filterSelector" className="form-label"></label>
       </div>
       <div className="mb-3">
-        <select ref={selectedRef} id="filterSelector" className="form-select" onChange={handleSelect}>
+        <select aria-selected ref={selectedRef} id="filterSelector" className="form-select" onChange={handleSelect}>
           <option defaultValue="All Categories">All Categories</option>
           {optionsArray.map((item) => (
             <option value={item} key={item}>

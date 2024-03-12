@@ -3,24 +3,26 @@ import Form from "./components/Form.tsx";
 import Filter from "./components/Filter.tsx";
 import List from "./components/List.tsx";
 
-function App() {
-  const categoriesOptionArray = ["Groceries", "Utilities", "Enterteinment"];
-  const [expensesArray, setExpensesArray] = useState([{ id: -1, description: "Pick a Category", amount: 0, category: "none" }]);
-  const [selectedFilter, setSelectedFilter] = useState("none");
+type FromData = {
+  description: string;
+  amount: number;
+  category: string;
+};
 
-  const handleFormData = (desc: string, am: number, cat: string) => {
+function App() {
+  const [expensesArray, setExpensesArray] = useState([
+    { id: -1, description: "This is a dummy object", amount: 0, category: "---" },
+  ]);
+  const [selectedFilter, setSelectedFilter] = useState("All Categories");
+  const categoriesOptionArray = ["Groceries", "Utilities", "Enterteinment"];
+
+  const handleFormData = (data: FromData) => {
     const newId = chooseNewId();
-    console.log({
-      id: newId,
-      description: desc,
-      amount: am,
-      category: cat,
-    });
-    setExpensesArray([...expensesArray, { id: newId, description: desc, amount: am, category: cat }]);
+    setExpensesArray([...expensesArray, { ...data, id: newId }]);
   };
 
   const chooseNewId = () => {
-    return expensesArray.length == 0 ? 0 : expensesArray.length - 1;
+    return expensesArray?.length == 0 ? 0 : expensesArray.length - 1;
   };
 
   const deleteExpenseFromArray = (idToBeDeleted: number) => {
@@ -31,7 +33,11 @@ function App() {
     <>
       <Form categoriesArray={categoriesOptionArray} handleSubmit={handleFormData} />
       <Filter optionsArray={categoriesOptionArray} filterStateSetter={setSelectedFilter} />
-      <List arrayToList={expensesArray} categoryAsFilter={selectedFilter} handleDeleteButton={deleteExpenseFromArray} />
+      <List
+        arrayToList={expensesArray}
+        categoryAsFilter={selectedFilter}
+        handleDeleteButton={(id) => deleteExpenseFromArray(id)}
+      />
     </>
   );
 }

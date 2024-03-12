@@ -1,23 +1,35 @@
+type ListItem = {
+  id: number;
+  description: string;
+  amount: number;
+  category: string;
+};
+
 interface Properties {
-  arrayToList: { id: number; description: string; amount: number; category: string }[];
+  arrayToList: ListItem[];
   categoryAsFilter?: string;
   handleDeleteButton: (id: number) => void;
 }
 
 function List({ arrayToList, categoryAsFilter = "All categories", handleDeleteButton }: Properties) {
   let totalToDisplay = 0;
+
   const arrayToBeListed = () => {
-    let arrayToReturn: { id: number; description: string; amount: number; category: string }[];
+    let arrayToReturn: ListItem[];
 
     if (categoryAsFilter != "All Categories") {
       arrayToReturn = arrayToList.filter((item) => item.category == categoryAsFilter && item);
     } else {
-      arrayToReturn = arrayToList.filter((item) => item.category != "none" && item);
+      arrayToReturn = arrayToList.filter((item) => item.category != "---" && item);
     }
 
     totalToDisplay = arrayToReturn.reduce((acum, item) => (acum += item.amount), 0);
     return arrayToReturn;
   };
+
+  if (arrayToList.length == 0 || (arrayToList[0].category == "---" && arrayToList.length == 1)) {
+    return <></>;
+  }
 
   return (
     <table className="table table-bordered">
@@ -31,7 +43,8 @@ function List({ arrayToList, categoryAsFilter = "All categories", handleDeleteBu
       <tbody>
         {arrayToBeListed().map((item) => (
           <tr key={item.id}>
-            <td>{item.description}</td> <td>$ {item.amount}</td>
+            <td>{item.description}</td>
+            <td>$ {item.amount}</td>
             <td>{item.category}</td>
             <td>
               <button type="button" className="btn btn-outline-danger" onClick={() => handleDeleteButton(item.id)}>
@@ -42,10 +55,12 @@ function List({ arrayToList, categoryAsFilter = "All categories", handleDeleteBu
         ))}
       </tbody>
       <tfoot>
-        <td>
-          <b>Totals:</b>
-        </td>
-        <td colSpan={3}>$ {totalToDisplay}</td>
+        <tr>
+          <td>
+            <b>Totals:</b>
+          </td>
+          <td colSpan={3}>$ {totalToDisplay.toFixed(2)}</td>
+        </tr>
       </tfoot>
     </table>
   );

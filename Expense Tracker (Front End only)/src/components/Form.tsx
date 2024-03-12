@@ -1,8 +1,13 @@
 import { FormEvent, useRef } from "react";
 
+type FromData = {
+  description: string;
+  amount: number;
+  category: string;
+};
 interface Properties {
   categoriesArray: string[];
-  handleSubmit: (description: string, amount: number, category: string) => void;
+  handleSubmit: (data: FromData) => void;
 }
 
 function Form({ categoriesArray, handleSubmit }: Properties) {
@@ -12,7 +17,14 @@ function Form({ categoriesArray, handleSubmit }: Properties) {
 
   const handleFormSubmition = (event: FormEvent) => {
     event.preventDefault();
-    handleSubmit(descrptionRef.current?.value || "", parseInt(amountRef.current?.value || "0"), categoryRef.current?.value || "");
+
+    const dataToSubmit: FromData = {
+      description: descrptionRef.current?.value || "",
+      amount: parseInt(amountRef.current?.value || "0"),
+      category: categoryRef.current?.value || "",
+    };
+
+    handleSubmit(dataToSubmit);
   };
 
   return (
