@@ -9,10 +9,15 @@ type FromData = {
   category: string;
 };
 
+type ExpenseItem = {
+  id: number;
+  description: string;
+  amount: number;
+  category: string;
+};
+
 function App() {
-  const [expensesArray, setExpensesArray] = useState([
-    { id: -1, description: "This is a dummy object", amount: 0, category: "---" },
-  ]);
+  const [expensesArray, setExpensesArray] = useState<ExpenseItem[]>([]);
   const [selectedFilter, setSelectedFilter] = useState("All Categories");
   const categoriesOptionArray = ["Groceries", "Utilities", "Enterteinment"];
 

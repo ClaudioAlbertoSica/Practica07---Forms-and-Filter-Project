@@ -1,4 +1,4 @@
-type ListItem = {
+type ExpenseItem = {
   id: number;
   description: string;
   amount: number;
@@ -6,7 +6,7 @@ type ListItem = {
 };
 
 interface Properties {
-  arrayToList: ListItem[];
+  arrayToList: ExpenseItem[];
   categoryAsFilter?: string;
   handleDeleteButton: (id: number) => void;
 }
@@ -15,12 +15,12 @@ function List({ arrayToList, categoryAsFilter = "All categories", handleDeleteBu
   let totalToDisplay = 0;
 
   const arrayToBeListed = () => {
-    let arrayToReturn: ListItem[];
+    let arrayToReturn: ExpenseItem[];
 
     if (categoryAsFilter != "All Categories") {
       arrayToReturn = arrayToList.filter((item) => item.category == categoryAsFilter && item);
     } else {
-      arrayToReturn = arrayToList.filter((item) => item.category != "---" && item);
+      arrayToReturn = arrayToList;
     }
 
     totalToDisplay = arrayToReturn.reduce((acum, item) => (acum += item.amount), 0);
